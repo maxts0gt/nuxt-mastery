@@ -1,4 +1,5 @@
 export default {
+  buildModules: ['@nuxtjs/dotenv'],
   components: true,
   head: {
     titleTemplate: 'Mastering Nuxt: %s ',
@@ -13,4 +14,5 @@ export default {
   router: {
     prefetchLinks: false,
   },
+  plugins: ['~/plugins/maps.client'],
 };
