@@ -10,4 +10,7 @@ export default {
     },
     meta: [{ charset: 'utf-8' }],
   },
+  router: {
+    prefetchLinks: false,
+  },
 };
