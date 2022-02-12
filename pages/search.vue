@@ -3,7 +3,13 @@
     Results for {{ label }}<br />
     <div style="height: 800px; width: 800px; float: right" ref="map"></div>
     <div v-if="homes.length > 0">
-      <HomeRow v-for="home in homes" :key="home.objectID" :home="home" />
+      <nuxt-link
+        v-for="home in homes"
+        :key="home.objectID"
+        :to="`/home/${home.objectID}`"
+      >
+        <HomeRow :home="home" />
+      </nuxt-link>
     </div>
     <div v-else>No results found</div>
   </div>
@@ -20,11 +26,26 @@ export default {
   },
   methods: {
     updateMap() {
-      this.$maps.showMap(this.$refs.map, this.lat, this.lng);
+      this.$maps.showMap(
+        this.$refs.map,
+        this.lat,
+        this.lng,
+        this.getHomeMarkers()
+      );
+    },
+    getHomeMarkers() {
+      return this.homes.map((home) => {
+        return {
+          ...home._geoloc,
+        };
+      });
     },
   },
   async beforeRouteUpdate(to, from, next) {
-    const data = await $dataApi.getHomesByLocation(to.query.lat, to.query.lng);
+    const data = await this.$dataApi.getHomesByLocation(
+      to.query.lat,
+      to.query.lng
+    );
     this.homes = data.json.hits;
     this.label = to.query.label;
     this.lat = to.query.lat;
@@ -32,7 +53,6 @@ export default {
     this.updateMap();
     next();
   },
-  watchQuery: ['lat'],
   async asyncData({ query, $dataApi }) {
     const data = await $dataApi.getHomesByLocation(query.lat, query.lng);
     return {

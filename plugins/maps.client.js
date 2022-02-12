@@ -7,15 +7,14 @@ export default function (context, inject) {
     showMap,
     makeAutoComplete,
   });
-
   function addScript() {
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.PLACES_API_KEY}&libraries=places&callback=initGoogleMaps`;
+    script.src =
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsKXrZB1kSA-Xw4FqmqhDNNHhP__Homtw&libraries=places&callback=initGoogleMaps';
     script.async = true;
     window.initGoogleMaps = initGoogleMaps;
     document.head.appendChild(script);
   }
-
   function initGoogleMaps() {
     isLoaded = true;
     waiting.forEach((item) => {
@@ -25,13 +24,11 @@ export default function (context, inject) {
     });
     waiting = [];
   }
-
   function makeAutoComplete(input) {
     if (!isLoaded) {
       waiting.push({ fn: makeAutoComplete, arguments });
       return;
     }
-
     const autoComplete = new window.google.maps.places.Autocomplete(input, {
       types: ['(cities)'],
     });
@@ -41,7 +38,7 @@ export default function (context, inject) {
     });
   }
 
-  function showMap(canvas, lat, lng) {
+  function showMap(canvas, lat, lng, markers) {
     if (!isLoaded) {
       waiting.push({
         fn: showMap,
@@ -56,8 +53,22 @@ export default function (context, inject) {
       zoomControl: true,
     };
     const map = new window.google.maps.Map(canvas, mapOptions);
-    const position = new window.google.maps.LatLng(lat, lng);
-    const marker = new window.google.maps.Marker({ position });
-    marker.setMap(map);
+
+    if (!markers) {
+      const position = new window.google.maps.LatLng(lat, lng);
+      const marker = new window.google.maps.Marker({ position });
+      marker.setMap(map);
+      return;
+    }
+
+    const bounds = new window.google.maps.LatLngBounds();
+    markers.forEach((home) => {
+      const position = new window.google.maps.LatLng(home.lat, home.lng);
+      const marker = new window.google.maps.Marker({ position });
+      marker.setMap(map);
+      bounds.extend(position);
+    });
+
+    map.fitBounds(bounds);
   }
 }
