@@ -16,4 +16,11 @@ export default {
   },
   plugins: ['~/plugins/maps.client', '~/plugins/dataApi'],
   modules: [],
+  css: ['~/assets/sass/app.scss'],
+  build: {
+    extractCSS: true,
+    loaders: {
+      limit: 0,
+    },
+  },
 };
