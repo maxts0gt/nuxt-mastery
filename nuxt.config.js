@@ -15,4 +15,5 @@ export default {
     prefetchLinks: false,
   },
   plugins: ['~/plugins/maps.client', '~/plugins/dataApi'],
+  modules: ['~/modules/test'],
 };
