@@ -1,5 +1,5 @@
 export default {
-  buildModules: ['@nuxtjs/dotenv'],
+  buildModules: ['@nuxtjs/dotenv', '@nuxtjs/tailwindcss'],
   components: true,
   head: {
     titleTemplate: 'Mastering Nuxt: %s ',
@@ -15,5 +15,5 @@ export default {
     prefetchLinks: false,
   },
   plugins: ['~/plugins/maps.client', '~/plugins/dataApi'],
-  modules: ['~/modules/test'],
+  modules: [],
 };
