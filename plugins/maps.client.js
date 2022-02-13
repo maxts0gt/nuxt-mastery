@@ -9,8 +9,7 @@ export default function (context, inject) {
   });
   function addScript() {
     const script = document.createElement('script');
-    script.src =
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCsKXrZB1kSA-Xw4FqmqhDNNHhP__Homtw&libraries=places&callback=initGoogleMaps';
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.PLACES_API_KEY}&libraries=places&callback=initGoogleMaps`;
     script.async = true;
     window.initGoogleMaps = initGoogleMaps;
     document.head.appendChild(script);
@@ -56,7 +55,9 @@ export default function (context, inject) {
 
     if (!markers) {
       const position = new window.google.maps.LatLng(lat, lng);
-      const marker = new window.google.maps.Marker({ position });
+      const marker = new window.google.maps.Marker({
+        position,
+      });
       marker.setMap(map);
       return;
     }
@@ -64,7 +65,14 @@ export default function (context, inject) {
     const bounds = new window.google.maps.LatLngBounds();
     markers.forEach((home) => {
       const position = new window.google.maps.LatLng(home.lat, home.lng);
-      const marker = new window.google.maps.Marker({ position });
+      const marker = new window.google.maps.Marker({
+        position,
+        label: {
+          text: `$${home.pricePerNight}`,
+          className: 'marker',
+        },
+        icon: 'https://maps.gstatic.com/mapfiles/transparent.png',
+      });
       marker.setMap(map);
       bounds.extend(position);
     });
