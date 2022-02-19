@@ -18,13 +18,6 @@ export default {
     }
   },
 
-  mounted() {
-    this.$maps.showMap(
-      this.$refs.map,
-      this.home._geoloc.lat,
-      this.home._geoloc.lng
-    )
-  },
   async asyncData({ params, $dataApi, error }) {
     const responses = await Promise.all([
       $dataApi.getHome(params.id),
@@ -43,15 +36,6 @@ export default {
       home: responses[0].json,
       reviews: responses[1].json.hits,
       user: responses[2].json.hits[0]
-    }
-  },
-  methods: {
-    formatDate(dateStr) {
-      const date = new Date(dateStr)
-      return date.toLocaleDateString(undefined, {
-        month: 'long',
-        year: 'numeric'
-      })
     }
   }
 }
