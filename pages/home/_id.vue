@@ -2,39 +2,10 @@
   <div class="app-container">
     <PropertyGallery :images="home.images" />
     <PropertyDetails :home="home" />
-    <div style="display-flex;">
-      <img
-        v-for="image in home.images"
-        :key="image"
-        alt="something descriptive"
-        :src="image"
-        width="200"
-        height="150"
-      />
-    </div>
-    {{ home.title }}
-    ${{ home.pricePerNight }} / night <br />
-    {{ home.location.address }} {{ home.location.city }}
-    <img src="/images/marker.svg" width="20" height="20" />
-    {{ home.location.state }}
-    {{ home.location.country }}
-    <br />
-    <img src="/images/star.svg" width="20" height="20" />
-    {{ home.reviewValue }} <br />
-    {{ home.guests }} guests, {{ home.bedrooms }} rooms, {{ home.beds }} beds,
-    {{ home.bathrooms }} bath <br />
-    <div style="height: 800px; width: 800px" ref="map"></div>
-    <div v-for="review in reviews" :key="review.objectID">
-      <img :src="review.reviewer.image" /> <br />
-      {{ review.reviewer.name }} <br />
-      {{ formatDate(review.date) }} <br />
-      <short-text :text="review.comment" :target="150" /><br />
-    </div>
-    <img :src="user.image" />
-    {{ user.name }} <br />
-    {{ formatDate(user.joined) }} <br />
-    {{ user.reviewCount }} <br />
-    {{ user.description }} <br />
+    <PropertyDescription :home="home" />
+    <PropertyMap :home="home" />
+    <PropertyReviews :reviews="reviews" />
+    <PropertyHost :user="user" />
   </div>
 </template>
 
