@@ -18,19 +18,14 @@
   </div>
 </template>
 <script>
+import pluralize from '~/utils/pluralize'
 export default {
   props: {
     home: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  methods: {
-    pluralize(number, singularWord) {
-      const text = `${number} ${singularWord}`;
-      if (number == 1) return text;
-      return text + 's';
-    },
-  },
-};
+  methods: pluralize
+}
 </script>

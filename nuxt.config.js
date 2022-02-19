@@ -4,15 +4,15 @@ export default {
   head: {
     titleTemplate: 'Mastering Nuxt: %s ',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'en'
     },
     bodyAttrs: {
-      class: ['my-style'],
+      class: ['my-style']
     },
-    meta: [{ charset: 'utf-8' }],
+    meta: [{ charset: 'utf-8' }]
   },
   router: {
-    prefetchLinks: false,
+    prefetchLinks: false
   },
   plugins: ['~/plugins/maps.client', '~/plugins/dataApi'],
   modules: [],
@@ -20,7 +20,7 @@ export default {
   build: {
     extractCSS: true,
     loaders: {
-      limit: 0,
-    },
-  },
-};
+      limit: 0
+    }
+  }
+}
